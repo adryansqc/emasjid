@@ -21,10 +21,11 @@ use Illuminate\Support\Facades\Auth;
 class KajianResource extends Resource
 {
     protected static ?string $model = Kajian::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
-
     protected static ?string $navigationGroup = 'Kegiatan';
+    // protected static ?int $navigationSort = 5;
+    protected static ?string $modelLabel = 'Kajian';
+    protected static ?string $pluralModelLabel = 'Kajian';
 
     public static function form(Form $form): Form
     {
