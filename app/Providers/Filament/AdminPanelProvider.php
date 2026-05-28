@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\Login;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -26,19 +27,20 @@ class AdminPanelProvider extends PanelProvider
     {
         $masjidName = 'Admin';
 
-	if (Schema::hasTable('masjids')) {
-    		$masjidName = Masjid::first()?->nama ?? 'Admin';
-	}
+        if (Schema::hasTable('masjids')) {
+            $masjidName = Masjid::first()?->nama ?? 'Admin';
+        }
 
         return $panel
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(Login::class)
             ->colors([
                 'primary' => Color::Green,
             ])
-            ->brandName($masjidName)
+            ->brandLogo(fn() => view('filament.brand'))
+            ->brandName('<a href="/">' . $masjidName . '</a>')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
