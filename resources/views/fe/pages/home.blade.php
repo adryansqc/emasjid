@@ -55,7 +55,7 @@
 
                         </span>
 
-                        <input name="keyword" type="search" class="form-control" id="keyword" placeholder="Cari pengumuman atau kajian.." aria-label="Search">
+                        <input name="keyword" type="search" class="form-control" id="keyword" placeholder="Cari Berita Acara atau Agenda Kegiatan.." aria-label="Search">
 
                         <button type="submit" class="form-control">Search</button>
                     </div>
@@ -180,7 +180,7 @@
 
             <div class="col-12">
                 <div class="tab-content" id="myTabContent">
-                    
+
                     @if ($kas->count() > 0)
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover kas-table">
@@ -224,7 +224,7 @@
         <div class="row">
 
             <div class="col-12 text-center">
-                <h2 class="text-white mb-4">Jadwal Kajian Terbaru</h1>
+                <h2 class="text-white mb-4">Agenda Kegiatan Masjid Terbaru</h1>
             </div>
 
             <div class="col-lg-10 col-12 mx-auto">
@@ -262,7 +262,7 @@
         <div class="row">
 
             <div class="col-lg-6 col-12">
-                <h2 class="mb-4">Pengumuman Terbaru</h2>
+                <h2 class="mb-4">Berita Acara Terbaru</h2>
             </div>
 
             <div class="clearfix"></div>
