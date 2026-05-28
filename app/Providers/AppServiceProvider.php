@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View; // Import View facade
 use App\Models\Masjid; // Import Masjid model (pastikan model ini ada)
@@ -21,7 +22,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $masjid = Masjid::first();
+        $masjid = null;
+
+        if (Schema::hasTable('masjids')) {
+            $masjid = Masjid::first();
+        }
+
         View::share('masjid', $masjid);
     }
 }

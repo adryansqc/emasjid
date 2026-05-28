@@ -7,6 +7,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
+use Illuminate\Support\Facades\Schema;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -23,7 +24,11 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        $masjidName = Masjid::first()?->nama ?? 'Admin';
+        $masjidName = 'Admin';
+
+	if (Schema::hasTable('masjids')) {
+    		$masjidName = Masjid::first()?->nama ?? 'Admin';
+	}
 
         return $panel
             ->default()
