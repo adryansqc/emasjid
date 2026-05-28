@@ -40,7 +40,7 @@ class QurbanResource extends Resource
                     ->label('Jenis Hewan')
                     ->required()
                     ->maxLength(255),
-                TextInput::make('jumlah')
+                TextInput::make('jumlah_uang')
                     ->label('Jumlah Uang')
                     ->prefix('Rp.')
                     ->required()
@@ -63,7 +63,7 @@ class QurbanResource extends Resource
                     ->label('Jenis Hewan')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('jumlah')
+                Tables\Columns\TextColumn::make('jumlah_uang')
                     ->label('Jumlah Uang')
                     ->money('IDR')
                     ->sortable(),
