@@ -25,7 +25,8 @@ class AnnouncementResource extends Resource
 
     protected static ?string $navigationGroup = 'Data Masjid';
 
-    protected static ?string $navigationLabel = 'Pengumuman';
+    protected static ?string $modelLabel = 'Berita Acara';
+    protected static ?string $pluralModelLabel = 'Berita Acara';
 
     protected static ?int $navigationSort = 3;
 

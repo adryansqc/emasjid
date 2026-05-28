@@ -24,7 +24,8 @@ class JumatanResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
 
     protected static ?string $navigationGroup = 'Kegiatan';
-    protected static ?string $navigationLabel = 'Jadwal Jumatan';
+    protected static ?string $modelLabel = 'Jadwal Sholat Jumat';
+    protected static ?string $pluralModelLabel = 'Jadwal Sholat Jumat';
 
     public static function form(Form $form): Form
     {

@@ -24,8 +24,8 @@ class KajianResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
     protected static ?string $navigationGroup = 'Kegiatan';
     // protected static ?int $navigationSort = 5;
-    protected static ?string $modelLabel = 'Kajian';
-    protected static ?string $pluralModelLabel = 'Kajian';
+    protected static ?string $modelLabel = 'Agenda Kegiatan Masjid';
+    protected static ?string $pluralModelLabel = 'Agenda Kegiatan Masjid';
 
     public static function form(Form $form): Form
     {

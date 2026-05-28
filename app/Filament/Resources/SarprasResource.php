@@ -27,6 +27,8 @@ class SarprasResource extends Resource
     protected static ?string $navigationGroup = 'Data Masjid';
 
     protected static ?int $navigationSort = 3;
+    protected static ?string $modelLabel = 'Perlengkapan';
+    protected static ?string $pluralModelLabel = 'Perlengkapan';
 
     public static function form(Form $form): Form
     {
