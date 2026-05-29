@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View; // Import View facade
 use App\Models\Masjid; // Import Masjid model (pastikan model ini ada)
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,5 +32,6 @@ class AppServiceProvider extends ServiceProvider
         View::share('masjid', $masjid);
 
         \Carbon\Carbon::setLocale('id');
+        Paginator::useBootstrapFive();
     }
 }
