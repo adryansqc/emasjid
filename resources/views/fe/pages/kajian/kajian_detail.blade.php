@@ -1,5 +1,8 @@
 @extends('fe.layouts.app')
 
+@section('og_title', $kajian->nama_kegiatan . ' - ' . ($masjid->nama ?? 'E Masjid'))
+@section('og_description', Str::limit(strip_tags($kajian->keterangan), 160))
+@section('og_type', 'article')
 @section('title')
     {{ $kajian->nama_kegiatan }}
 @endsection

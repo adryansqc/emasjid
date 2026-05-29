@@ -1,5 +1,9 @@
 @extends('fe.layouts.app')
 
+
+@section('og_title', $pengumuman->judul . ' - ' . ($masjid->nama ?? 'E Masjid'))
+@section('og_description', Str::limit(strip_tags($pengumuman->isi), 160))
+@section('og_type', 'article')
 @section('title')
     {{ $pengumuman->judul }}
 @endsection
