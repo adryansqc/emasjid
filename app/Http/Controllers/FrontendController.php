@@ -28,4 +28,58 @@ class FrontendController extends Controller
             ]
         );
     }
+
+    public function kajian()
+    {
+        $kajian = Kajian::latest()->paginate(6);
+
+        return view('fe.pages.kajian.kajian_page', [
+            'kajian' => $kajian,
+        ]);
+    }
+
+    public function kajianDetail(Kajian $kajian)
+    {
+        return view('fe.pages.kajian.kajian_detail', [
+            'kajian' => $kajian,
+        ]);
+    }
+
+    public function pengumuman()
+    {
+        $pengumuman = Announcement::latest()->paginate(6);
+
+        return view('fe.pages.pengumuman.pengumuman_page', [
+            'pengumuman' => $pengumuman,
+        ]);
+    }
+
+    public function pengumumanDetail(Announcement $pengumuman)
+    {
+        return view('fe.pages.pengumuman.pengumuman_detail', [
+            'pengumuman' => $pengumuman,
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->get('keyword');
+
+        $kajian = Kajian::where('nama_kegiatan', 'like', "%$keyword%")
+            ->orWhere('keterangan', 'like', "%$keyword%")
+            ->orWhere('tempat', 'like', "%$keyword%")
+            ->latest()
+            ->paginate(6);
+
+        $pengumuman = Announcement::where('judul', 'like', "%$keyword%")
+            ->orWhere('isi', 'like', "%$keyword%")
+            ->latest()
+            ->paginate(6);
+
+        return view('fe.pages.pencarian.search', [
+            'kajian' => $kajian,
+            'pengumuman' => $pengumuman,
+            'keyword' => $keyword,
+        ]);
+    }
 }

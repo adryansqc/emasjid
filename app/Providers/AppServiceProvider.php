@@ -29,5 +29,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         View::share('masjid', $masjid);
+
+        \Carbon\Carbon::setLocale('id');
     }
 }

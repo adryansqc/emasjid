@@ -49,7 +49,7 @@
                 <h1 class="text-white text-center">{{ $masjid->nama ?? 'E-Masjid' }}</h1>
 
 
-                <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search">
+                <form method="get" action="{{ route('frontend.search') }}" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search">
                     <div class="input-group input-group-lg">
                         <span class="input-group-text bi-search" id="basic-addon1">
 
@@ -76,7 +76,7 @@
                     {{-- @php
                         dd($updatePengumuman);
                     @endphp --}}
-                    <a href="topics-detail.html">
+                    <a href="{{ route('frontend.pengumuman.detail', $updatePengumuman) }}">
                         <div class="d-flex">
                             <div>
                                 <h5 class="mb-2">{{ $updatePengumuman->judul }}</h5>
@@ -87,7 +87,7 @@
                             <span class="badge bg-design rounded-pill ms-auto">lihat</span>
                         </div>
 
-                        <img src="{{ asset('topik') }}/images/topics/undraw_Remote_design_team_re_urdx.png" class="custom-block-image img-fluid" alt="">
+                        <img src="{{ asset('topik') }}/images/masjid-solo.jpg" class="custom-block-image img-fluid" alt="">
                     </a>
                 </div>
             </div>
@@ -103,7 +103,7 @@
 
                                 <p class="text-white">{{ $updateKajian->keterangan }}</p>
 
-                                <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3">Selengkapnya</a>
+                                <a href="{{ route('frontend.kajian.detail', $updateKajian) }}" class="btn custom-btn mt-2 mt-lg-3">Selengkapnya</a>
                             </div>
 
                         </div>
@@ -242,8 +242,10 @@
 
                             <p class="text-white">{{ $item->keterangan }}</p>
 
+                            <a href="{{ route('frontend.kajian.detail', $item) }}" class="btn custom-btn mt-2">Selengkapnya</a>
+
                             <div class="icon-holder">
-                              <i class="bi-bookmark"></i>
+                                <i class="bi-bookmark"></i>
                             </div>
                         </li>
                         @endforeach
@@ -282,15 +284,15 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="heading{{ $index }}">
                             <button class="accordion-button {{ $index === 0 ? '' : 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}" aria-expanded="{{ $index === 0 ? 'true' : 'false' }}" aria-controls="collapse{{ $index }}">
-
                                 {{ $item->judul }}
                             </button>
                         </h2>
 
                         <div id="collapse{{ $index }}" class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}" aria-labelledby="heading{{ $index }}" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-
-                                {{ $item->isi }}
+                                {{ Str::limit($item->isi ?? '', 50) }}
+                                <br>
+                                <a href="{{ route('frontend.pengumuman.detail', $item) }}" class="btn custom-btn btn-sm mt-3">Selengkapnya</a>
                             </div>
                         </div>
                     </div>
@@ -312,8 +314,8 @@
                 <h2 class="mb-5">Datangi Kami Di</h2>
             </div>
 
-            <div class="col-lg-5 col-12 mb-4 mb-lg-0">
-                <iframe class="google-map" src="{{ $masjid->url ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23349.00650995004!2d102.80039281965921!3d-2.168823270213839!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e2fcb3b216b8ae1%3A0x95709a1b6c162a15!2sMasjid%20Nurul%20Islam!5e0!3m2!1sen!2sid!4v1749002449001!5m2!1sen!2sid' }}" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="col-lg-8 col-12 mb-4 mb-lg-0">
+                <iframe class="google-map" src="{{ $masjid->url ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23349.00650995004!2d102.80039281965921!3d-2.168823270213839!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e2fcb3b216b8ae1%3A0x95709a1b6c162a15!2sMasjid%20Nurul%20Islam!5e0!3m2!1sen!2sid!4v1749002449001!5m2!1sen!2sid' }}" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
 
             <div class="col-lg-3 col-md-6 col-12 mb-3 mb-lg- mb-md-0 ms-auto">

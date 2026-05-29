@@ -8,3 +8,13 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
+Route::get('/search', [FrontendController::class, 'search'])->name('frontend.search');
+
+// Route::get('/agenda-kegiatan', function () {
+//     return view('fe.pages.kajian.kajian_page');
+// });
+
+Route::get('/agenda-kegiatan', [FrontendController::class, 'kajian'])->name('frontend.kajian');
+Route::get('/agenda-kegiatan/{kajian}', [FrontendController::class, 'kajianDetail'])->name('frontend.kajian.detail');
+Route::get('/berita-acara', [FrontendController::class, 'pengumuman'])->name('frontend.pengumuman');
+Route::get('/berita-acara/{pengumuman}', [FrontendController::class, 'pengumumanDetail'])->name('frontend.pengumuman.detail');
