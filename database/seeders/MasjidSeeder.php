@@ -15,9 +15,9 @@ class MasjidSeeder extends Seeder
     {
         Masjid::create([
             'user_id' => 1,
-            'nama' => 'Masjid Al-Barokah',
-            'alamat' => 'Jl. Contoh Alamat No. 1',
-            'url' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23349.00650995004!2d102.80039281965921!3d-2.168823270213839!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e2fcb3b216b8ae1%3A0x95709a1b6c162a15!2sMasjid%20Nurul%20Islam!5e0!3m2!1sen!2sid!4v1749002449001!5m2!1sen!2sid',
+            'nama' => 'Masjid Nurul Falah',
+            'alamat' => 'RT. 11, Desa Sungai Gelam, Kecamatan Sungai Gelam, Kabupaten Muaro Jambi, Provinsi Jambi',
+            'url' => 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3988.044217221414!2d103.73672507496649!3d-1.7087030482754944!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e259caf482bda0b%3A0xd1f4ef9a6cceea2!2sMESJID%20NURUL%20FALAH!5e0!3m2!1sid!2sid!4v1780469382692!5m2!1sid!2sid',
             'kontak' => '081234567890',
         ]);
     }

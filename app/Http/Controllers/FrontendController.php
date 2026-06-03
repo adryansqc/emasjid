@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Announcement;
 use App\Models\Kajian;
 use App\Models\Kas;
+use App\Models\Saran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class FrontendController extends Controller
 {
@@ -17,16 +19,32 @@ class FrontendController extends Controller
         $kajian = Kajian::latest()->take(3)->get();
         $kas = Kas::all();
 
-        return view(
-            'fe.pages.home',
-            [
-                'kajian' => $kajian,
-                'updateKajian' => $updateKajian,
-                'pengumuman' => $pengumuman,
-                'updatePengumuman' => $updatePengumuman,
-                'kas' => $kas,
-            ]
-        );
+        $hariIni = null;
+        try {
+            $bulan = now()->month;
+            $tahun = now()->year;
+
+            $response = Http::post('https://equran.id/api/v2/shalat', [
+                'provinsi' => 'Jambi',
+                'kabkota'  => 'Kota Jambi',
+                'bulan'    => $bulan,
+                'tahun'    => $tahun,
+            ]);
+
+            $jadwal = $response->json('data.jadwal') ?? [];
+            $hariIni = collect($jadwal)->firstWhere('tanggal', now()->day);
+        } catch (\Exception $e) {
+            $hariIni = null;
+        }
+
+        return view('fe.pages.home', [
+            'kajian'           => $kajian,
+            'updateKajian'     => $updateKajian,
+            'pengumuman'       => $pengumuman,
+            'updatePengumuman' => $updatePengumuman,
+            'kas'              => $kas,
+            'hariIni'          => $hariIni,
+        ]);
     }
 
     public function kajian()
@@ -81,5 +99,32 @@ class FrontendController extends Controller
             'pengumuman' => $pengumuman,
             'keyword' => $keyword,
         ]);
+    }
+
+    public function saran()
+    {
+        return view('fe.pages.saran.saran_page');
+    }
+
+    public function saranStore(Request $request)
+    {
+        $request->validate([
+            'nama'     => 'required|string|max:255',
+            'email'    => 'nullable|email|max:255',
+            'no_hp'    => 'nullable|string|max:20',
+            'kategori' => 'required|in:saran,masukan,kritik,pertanyaan',
+            'pesan'    => 'required|string',
+        ]);
+
+        Saran::create([
+            'nama'     => $request->nama,
+            'email'    => $request->email,
+            'no_hp'    => $request->no_hp,
+            'kategori' => $request->kategori,
+            'pesan'    => $request->pesan,
+            'status'   => 'belum_dibaca',
+        ]);
+
+        return redirect()->route('frontend.saran')->with('success', 'Saran & masukan Anda berhasil dikirim. Terima kasih!');
     }
 }

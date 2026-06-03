@@ -1,0 +1,164 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Filament\Resources\SaranResource\Pages;
+use App\Filament\Resources\SaranResource\RelationManagers;
+use App\Models\Saran;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Filament\Tables\Actions\Action;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+class SaranResource extends Resource
+{
+    protected static ?string $model = Saran::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+
+    protected static ?string $navigationGroup = 'Lainnya';
+
+    protected static ?string $modelLabel = 'Saran & Masukan';
+
+    protected static ?string $pluralModelLabel = 'Saran & Masukan';
+
+    protected static ?int $navigationSort = 10;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', 'belum_dibaca')->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'danger';
+    }
+
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                //
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('nama')
+                    ->label('Nama')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('email')
+                    ->label('Email')
+                    ->searchable()
+                    ->default('-'),
+
+                TextColumn::make('no_hp')
+                    ->label('No. HP')
+                    ->default('-'),
+
+                TextColumn::make('kategori')
+                    ->label('Kategori')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'saran'      => 'info',
+                        'masukan'    => 'success',
+                        'kritik'     => 'danger',
+                        'pertanyaan' => 'warning',
+                        default      => 'gray',
+                    })
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'saran'      => 'Saran',
+                        'masukan'    => 'Masukan',
+                        'kritik'     => 'Kritik',
+                        'pertanyaan' => 'Pertanyaan',
+                        default      => $state,
+                    }),
+
+                TextColumn::make('pesan')
+                    ->label('Pesan')
+                    ->limit(60)
+                    ->tooltip(fn($record) => $record->pesan),
+
+                TextColumn::make('status')
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'belum_dibaca' => 'danger',
+                        'sudah_dibaca' => 'success',
+                        default        => 'gray',
+                    })
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'belum_dibaca' => 'Belum Dibaca',
+                        'sudah_dibaca' => 'Sudah Dibaca',
+                        default        => $state,
+                    }),
+
+                TextColumn::make('created_at')
+                    ->label('Dikirim')
+                    ->dateTime('d M Y, H:i')
+                    ->sortable(),
+            ])
+            ->filters([
+                SelectFilter::make('kategori')
+                    ->label('Kategori')
+                    ->options([
+                        'saran'      => 'Saran',
+                        'masukan'    => 'Masukan',
+                        'kritik'     => 'Kritik',
+                        'pertanyaan' => 'Pertanyaan',
+                    ]),
+
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'belum_dibaca' => 'Belum Dibaca',
+                        'sudah_dibaca' => 'Sudah Dibaca',
+                    ]),
+            ])
+            ->actions([
+                Action::make('tandai_dibaca')
+                    ->label('Tandai Dibaca')
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                    ->visible(fn(Saran $record) => $record->status === 'belum_dibaca')
+                    ->action(fn(Saran $record) => $record->update(['status' => 'sudah_dibaca'])),
+
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->defaultSort('created_at', 'desc')
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListSarans::route('/'),
+            'create' => Pages\CreateSaran::route('/create'),
+            'view' => Pages\ViewSaran::route('/{record}'),
+            'edit' => Pages\EditSaran::route('/{record}/edit'),
+        ];
+    }
+}

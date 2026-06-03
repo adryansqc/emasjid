@@ -52,6 +52,33 @@
 
     @stack('script')
 
+    <script>
+        $(document).ready(function() {
+            var currentUrl = window.location.href;
+
+            $('.navbar-nav .nav-item .nav-link').each(function() {
+                var linkUrl = $(this).attr('href');
+                if (linkUrl && currentUrl === linkUrl) {
+                    $('.navbar-nav .nav-item .nav-link').removeClass('active').addClass('inactive');
+                    $(this).addClass('active').removeClass('inactive');
+                }
+            });
+
+            @if(request()->routeIs('frontend.kajian') || request()->routeIs('frontend.kajian.detail'))
+                setActiveNav('{{ route('frontend.kajian') }}');
+            @elseif(request()->routeIs('frontend.pengumuman') || request()->routeIs('frontend.pengumuman.detail'))
+                setActiveNav('{{ route('frontend.pengumuman') }}');
+            @elseif(request()->routeIs('frontend.saran'))
+                setActiveNav('{{ route('frontend.saran') }}');
+            @endif
+
+            function setActiveNav(url) {
+                $('.navbar-nav .nav-item .nav-link').removeClass('active').addClass('inactive');
+                $('.navbar-nav .nav-item .nav-link[href="' + url + '"]').addClass('active').removeClass('inactive');
+            }
+        });
+    </script>
+
 </body>
 
 </html>

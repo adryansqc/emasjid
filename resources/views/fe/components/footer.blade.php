@@ -49,8 +49,9 @@
 
             <div class="col-lg-3 col-md-4 col-12 mt-4 mt-lg-0 ms-auto">
 
-                <p class="copyright-text mt-lg-5 mt-4">Copyright © {{ $masjid->nama ?? 'E-Masjid' }}.
-                
+                {{-- <p class="copyright-text mt-lg-5 mt-4">Copyright © {{ $masjid->nama ?? 'E-Masjid' }}. --}}
+                <p class="copyright-text mt-lg-5 mt-4">Copyright © Sabila Tashirul Umri (Teknik Informatika Unama).
+
             </div>
 
         </div>

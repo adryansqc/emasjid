@@ -1,3 +1,26 @@
+
+<style>
+    .navbar-nav .nav-link {
+        font-size: 11px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .navbar .navbar-brand span {
+        font-size: 14px;
+    }
+
+    .navbar .navbar-nav {
+        gap: 0;
+    }
+
+    .navbar-nav .dropdown-toggle.active {
+        color: var(--color-white) !important;
+        opacity: 1 !important;
+    }
+
+</style>
+
 <nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="{{ route('frontend.index') }}">
@@ -20,6 +43,14 @@
                         <a class="nav-link click-scroll" href="#section_1">Beranda</a>
                     @else
                         <a class="nav-link" href="{{ route('frontend.index') }}#section_1">Beranda</a>
+                    @endif
+                </li>
+
+                <li class="nav-item">
+                    @if(request()->routeIs('frontend.index'))
+                        <a class="nav-link click-scroll" href="#jadwal-shalat">Jadwal Shalat</a>
+                    @else
+                        <a class="nav-link" href="{{ route('frontend.index') }}#jadwal-shalat">Jadwal Shalat</a>
                     @endif
                 </li>
 
@@ -56,13 +87,17 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kegiatan</a>
+                    <a class="nav-link dropdown-toggle {{ request()->routeIs('frontend.kajian*') || request()->routeIs('frontend.pengumuman*') ? 'active' : '' }}"
+                        href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kegiatan</a>
 
                     <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                        <li><a class="dropdown-item" href="{{ route('frontend.kajian') }}">Halaman Agenda Kegiatan</a></li>
-
-                        <li><a class="dropdown-item" href="{{ route('frontend.pengumuman') }}">Halaman Berita Acara</a></li>
+                        <li><a class="dropdown-item {{ request()->routeIs('frontend.kajian*') ? 'active' : '' }}" href="{{ route('frontend.kajian') }}">Halaman Agenda Kegiatan</a></li>
+                        <li><a class="dropdown-item {{ request()->routeIs('frontend.pengumuman*') ? 'active' : '' }}" href="{{ route('frontend.pengumuman') }}">Halaman Berita Acara</a></li>
                     </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('frontend.saran') ? 'active' : '' }}" href="{{ route('frontend.saran') }}">Saran & Masukan</a>
                 </li>
             </ul>
 

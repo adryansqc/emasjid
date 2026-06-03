@@ -45,7 +45,7 @@
         <div class="row">
 
             <div class="col-lg-8 col-12 mx-auto">
-                <h6 class="text-center">Halaman informasi dan website resmi dari</h6>
+                <h6 class="text-center">Sistem Informasi</h6>
                 <h1 class="text-white text-center">{{ $masjid->nama ?? 'E-Masjid' }}</h1>
 
 
@@ -134,6 +134,95 @@
             </div>
 
         </div>
+    </div>
+</section>
+
+<section class="section-padding" id="jadwal-shalat">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-4">
+                <h2>Jadwal Shalat Hari Ini</h2>
+                <p class="text-muted">
+                    {{ $hariIni['hari'] }}, {{ \Carbon\Carbon::parse($hariIni['tanggal_lengkap'])->translatedFormat('d F Y') }} — Kota Jambi
+                </p>
+                <h4 class="text-primary fw-bold" id="jam-realtime"></h4>
+                <div id="waktu-shalat-notif" class="mt-2" style="min-height: 36px;"></div>
+            </div>
+        </div>
+
+
+        @if($hariIni)
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-12">
+                <div class="row text-center g-3">
+
+                    <div class="col-6 col-md-3 col-lg">
+                        <div class="card border-0 shadow-sm p-3">
+                            <i class="bi-moon-stars fs-3 text-primary mb-2"></i>
+                            <p class="fw-bold mb-1">Imsak</p>
+                            <h5 class="text-primary mb-0">{{ $hariIni['imsak'] }}</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3 col-lg">
+                        <div class="card border-0 shadow-sm p-3">
+                            <i class="bi-sunrise fs-3 text-warning mb-2"></i>
+                            <p class="fw-bold mb-1">Subuh</p>
+                            <h5 class="text-warning mb-0">{{ $hariIni['subuh'] }}</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3 col-lg">
+                        <div class="card border-0 shadow-sm p-3">
+                            <i class="bi-sun fs-3 text-warning mb-2"></i>
+                            <p class="fw-bold mb-1">Dhuha</p>
+                            <h5 class="text-warning mb-0">{{ $hariIni['dhuha'] }}</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3 col-lg">
+                        <div class="card border-0 shadow-sm p-3">
+                            <i class="bi-sun fs-3 text-danger mb-2"></i>
+                            <p class="fw-bold mb-1">Dzuhur</p>
+                            <h5 class="text-danger mb-0">{{ $hariIni['dzuhur'] }}</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3 col-lg">
+                        <div class="card border-0 shadow-sm p-3">
+                            <i class="bi-cloud-sun fs-3 text-success mb-2"></i>
+                            <p class="fw-bold mb-1">Ashar</p>
+                            <h5 class="text-success mb-0">{{ $hariIni['ashar'] }}</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3 col-lg">
+                        <div class="card border-0 shadow-sm p-3">
+                            <i class="bi-sunset fs-3 text-danger mb-2"></i>
+                            <p class="fw-bold mb-1">Maghrib</p>
+                            <h5 class="text-danger mb-0">{{ $hariIni['maghrib'] }}</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3 col-lg">
+                        <div class="card border-0 shadow-sm p-3">
+                            <i class="bi-moon fs-3 text-primary mb-2"></i>
+                            <p class="fw-bold mb-1">Isya</p>
+                            <h5 class="text-primary mb-0">{{ $hariIni['isya'] }}</h5>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        @else
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="text-muted">Jadwal shalat tidak tersedia saat ini.</p>
+            </div>
+        </div>
+        @endif
+
     </div>
 </section>
 
@@ -337,3 +426,66 @@
     </div>
 </section>
 @endsection
+
+@push('script')
+<script>
+    var jadwalShalat = {
+        imsak:   '{{ $hariIni["imsak"] }}',
+        subuh:   '{{ $hariIni["subuh"] }}',
+        dhuha:   '{{ $hariIni["dhuha"] }}',
+        dzuhur:  '{{ $hariIni["dzuhur"] }}',
+        ashar:   '{{ $hariIni["ashar"] }}',
+        maghrib: '{{ $hariIni["maghrib"] }}',
+        isya:    '{{ $hariIni["isya"] }}',
+    };
+
+    var namaWaktu = {
+        imsak:   'Imsak',
+        subuh:   'Subuh',
+        dhuha:   'Dhuha',
+        dzuhur:  'Dzuhur',
+        ashar:   'Ashar',
+        maghrib: 'Maghrib',
+        isya:    'Isya',
+    };
+
+    function toMenit(jamStr) {
+        var parts = jamStr.split(':');
+        return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+    }
+
+    function updateJam() {
+        var now = new Date();
+        var jam = now.toLocaleTimeString('id-ID', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+        document.getElementById('jam-realtime').textContent = jam + ' WIB';
+
+        var nowMenit = now.getHours() * 60 + now.getMinutes();
+        var notif = document.getElementById('waktu-shalat-notif');
+        var tampil = false;
+
+        for (var key in jadwalShalat) {
+            var waktuMenit = toMenit(jadwalShalat[key]);
+            var selisih = nowMenit - waktuMenit;
+
+            if (selisih >= 0 && selisih < 10) {
+                notif.innerHTML = '<span class="badge fs-6 px-4 py-2" style="background: linear-gradient(135deg, #43a08a, #7DCFBE); border-radius: 20px;">' +
+                    '<i class="bi-bell-fill me-2"></i> Sudah masuk waktu ' + namaWaktu[key] + '!</span>';
+                tampil = true;
+                break;
+            }
+        }
+
+        if (!tampil) {
+            notif.innerHTML = '';
+        }
+    }
+
+    updateJam();
+    setInterval(updateJam, 1000);
+</script>
+@endpush

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/search', [FrontendController::class, 'search'])->name('frontend.search');
 
+Route::get('/saran', [FrontendController::class, 'saran'])->name('frontend.saran');
+Route::post('/saran', [FrontendController::class, 'saranStore'])->name('frontend.saran.store');
+
 // Route::get('/agenda-kegiatan', function () {
 //     return view('fe.pages.kajian.kajian_page');
 // });
