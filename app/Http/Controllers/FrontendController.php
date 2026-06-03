@@ -127,4 +127,25 @@ class FrontendController extends Controller
 
         return redirect()->route('frontend.saran')->with('success', 'Saran & masukan Anda berhasil dikirim. Terima kasih!');
     }
+
+    public function alquran()
+    {
+        $response = Http::get('https://equran.id/api/v2/surat');
+        $surat = $response->json('data') ?? [];
+
+        return view('fe.pages.alquran.alquran_page', [
+            'surat' => $surat,
+        ]);
+    }
+
+    public function alquranDetail($nomor)
+    {
+        $response = Http::get("https://equran.id/api/v2/surat/{$nomor}");
+        $data = $response->json('data') ?? [];
+
+        return view('fe.pages.alquran.alquran_detail', [
+            'surat' => $data,
+            'ayat'  => $data['ayat'] ?? [],
+        ]);
+    }
 }

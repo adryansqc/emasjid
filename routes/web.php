@@ -13,6 +13,9 @@ Route::get('/search', [FrontendController::class, 'search'])->name('frontend.sea
 Route::get('/saran', [FrontendController::class, 'saran'])->name('frontend.saran');
 Route::post('/saran', [FrontendController::class, 'saranStore'])->name('frontend.saran.store');
 
+Route::get('/alquran', [FrontendController::class, 'alquran'])->name('frontend.alquran');
+Route::get('/alquran/{nomor}', [FrontendController::class, 'alquranDetail'])->name('frontend.alquran.detail');
+
 // Route::get('/agenda-kegiatan', function () {
 //     return view('fe.pages.kajian.kajian_page');
 // });
