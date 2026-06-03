@@ -115,7 +115,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('frontend.saran*') ? 'active' : '' }}" href="{{ route('frontend.saran') }}">Saran</a>
+                    <a class="nav-link {{ request()->routeIs('frontend.saran*') ? 'active' : '' }}" href="{{ route('frontend.saran') }}">Saran & Masukan</a>
                 </li>
 
             </ul>
