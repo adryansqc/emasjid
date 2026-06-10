@@ -36,6 +36,9 @@
     .kas-table .saldo-cell {
         font-weight: 600;
     }
+    .warna-kuning {
+        color: #eccf5e;
+    }
 </style>
 @endpush
 
@@ -45,7 +48,7 @@
         <div class="row">
 
             <div class="col-lg-8 col-12 mx-auto">
-                <h6 class="text-center">Sistem Informasi</h6>
+                <h6 class="text-center warna-kuning">Sistem Informasi</h6>
                 <h1 class="text-white text-center">{{ $masjid->nama ?? 'E-Masjid' }}</h1>
 
 

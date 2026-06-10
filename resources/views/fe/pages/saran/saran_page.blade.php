@@ -102,8 +102,8 @@
                         <div class="saran-icon-box" style="background: rgba(255,255,255,0.15);">
                             <i class="bi-chat-dots text-white"></i>
                         </div>
-                        <h6 class="text-white fw-bold mb-1">Saran</h6>
-                        <p class="text-white mb-0" style="font-size: 13px; opacity: 0.8;">Berikan ide atau usulan untuk kemajuan masjid.</p>
+                        <h6 class="text-white fw-bold mb-1">Saran & Kritik</h6>
+                        <p class="text-white mb-0" style="font-size: 13px; opacity: 0.8;">Berikan saran, masukan, kritik membangun, atau pertanyaan seputar kegiatan masjid.</p>
                     </div>
 
                     <div class="info-card shadow-sm border-0" style="background: linear-gradient(135deg, #43a047, #1b5e20);">
@@ -112,14 +112,6 @@
                         </div>
                         <h6 class="text-white fw-bold mb-1">Masukan</h6>
                         <p class="text-white mb-0" style="font-size: 13px; opacity: 0.8;">Sampaikan masukan untuk perbaikan layanan masjid.</p>
-                    </div>
-
-                    <div class="info-card shadow-sm border-0" style="background: linear-gradient(135deg, #e53935, #b71c1c);">
-                        <div class="saran-icon-box" style="background: rgba(255,255,255,0.15);">
-                            <i class="bi-exclamation-triangle text-white"></i>
-                        </div>
-                        <h6 class="text-white fw-bold mb-1">Kritik</h6>
-                        <p class="text-white mb-0" style="font-size: 13px; opacity: 0.8;">Sampaikan kritik yang membangun dengan bijak.</p>
                     </div>
 
                     <div class="info-card shadow-sm border-0" style="background: linear-gradient(135deg, #f7c948, #f9a825);">
@@ -172,9 +164,8 @@
                                 <label class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
                                 <select name="kategori" class="form-select @error('kategori') is-invalid @enderror">
                                     <option value="">-- Pilih Kategori --</option>
-                                    <option value="saran"      {{ old('kategori') === 'saran'      ? 'selected' : '' }}>Saran</option>
+                                    <option value="saran"      {{ old('kategori') === 'saran'      ? 'selected' : '' }}>Saran & Kritik</option>
                                     <option value="masukan"    {{ old('kategori') === 'masukan'    ? 'selected' : '' }}>Masukan</option>
-                                    <option value="kritik"     {{ old('kategori') === 'kritik'     ? 'selected' : '' }}>Kritik</option>
                                     <option value="pertanyaan" {{ old('kategori') === 'pertanyaan' ? 'selected' : '' }}>Pertanyaan</option>
                                 </select>
                                 @error('kategori')
