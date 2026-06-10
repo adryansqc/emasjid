@@ -32,7 +32,7 @@ class SaranResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::where('status', 'belum_dibaca')->count() ?: null;
+        return static::getModel()::where('status_baca', 'belum_dibaca')->count() ?: null;
     }
 
     public static function getNavigationBadgeColor(): ?string
@@ -73,14 +73,12 @@ class SaranResource extends Resource
                     ->color(fn(string $state): string => match ($state) {
                         'saran'      => 'info',
                         'masukan'    => 'success',
-                        'kritik'     => 'danger',
                         'pertanyaan' => 'warning',
                         default      => 'gray',
                     })
                     ->formatStateUsing(fn(string $state): string => match ($state) {
-                        'saran'      => 'Saran',
+                        'saran'      => 'Saran & Kritik',
                         'masukan'    => 'Masukan',
-                        'kritik'     => 'Kritik',
                         'pertanyaan' => 'Pertanyaan',
                         default      => $state,
                     }),
@@ -90,8 +88,8 @@ class SaranResource extends Resource
                     ->limit(60)
                     ->tooltip(fn($record) => $record->pesan),
 
-                TextColumn::make('status')
-                    ->label('Status')
+                TextColumn::make('status_baca')
+                    ->label('Status Baca')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
                         'belum_dibaca' => 'danger',
@@ -104,6 +102,22 @@ class SaranResource extends Resource
                         default        => $state,
                     }),
 
+                TextColumn::make('status_persetujuan')
+                    ->label('Status Persetujuan')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'menunggu'        => 'warning',
+                        'disetujui'       => 'success',
+                        'tidak_disetujui' => 'danger',
+                        default           => 'gray',
+                    })
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'menunggu'        => 'Menunggu',
+                        'disetujui'       => 'Disetujui',
+                        'tidak_disetujui' => 'Tidak Disetujui',
+                        default           => $state,
+                    }),
+
                 TextColumn::make('created_at')
                     ->label('Dikirim')
                     ->dateTime('d M Y, H:i')
@@ -113,17 +127,24 @@ class SaranResource extends Resource
                 SelectFilter::make('kategori')
                     ->label('Kategori')
                     ->options([
-                        'saran'      => 'Saran',
+                        'saran'      => 'Saran & Kritik',
                         'masukan'    => 'Masukan',
-                        'kritik'     => 'Kritik',
                         'pertanyaan' => 'Pertanyaan',
                     ]),
 
-                SelectFilter::make('status')
-                    ->label('Status')
+                SelectFilter::make('status_baca')
+                    ->label('Status Baca')
                     ->options([
                         'belum_dibaca' => 'Belum Dibaca',
                         'sudah_dibaca' => 'Sudah Dibaca',
+                    ]),
+
+                SelectFilter::make('status_persetujuan')
+                    ->label('Status Persetujuan')
+                    ->options([
+                        'menunggu'        => 'Menunggu',
+                        'disetujui'       => 'Disetujui',
+                        'tidak_disetujui' => 'Tidak Disetujui',
                     ]),
             ])
             ->actions([
@@ -131,8 +152,22 @@ class SaranResource extends Resource
                     ->label('Tandai Dibaca')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
-                    ->visible(fn(Saran $record) => $record->status === 'belum_dibaca')
-                    ->action(fn(Saran $record) => $record->update(['status' => 'sudah_dibaca'])),
+                    ->visible(fn(Saran $record) => $record->status_baca === 'belum_dibaca')
+                    ->action(fn(Saran $record) => $record->update(['status_baca' => 'sudah_dibaca'])),
+
+                Action::make('setujui')
+                    ->label('Setujui')
+                    ->icon('heroicon-o-check')
+                    ->color('success')
+                    ->visible(fn(Saran $record) => $record->status_persetujuan === 'menunggu')
+                    ->action(fn(Saran $record) => $record->update(['status_persetujuan' => 'disetujui'])),
+
+                Action::make('tolak')
+                    ->label('Tolak')
+                    ->icon('heroicon-o-x-mark')
+                    ->color('danger')
+                    ->visible(fn(Saran $record) => $record->status_persetujuan === 'menunggu')
+                    ->action(fn(Saran $record) => $record->update(['status_persetujuan' => 'tidak_disetujui'])),
 
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\DeleteAction::make(),

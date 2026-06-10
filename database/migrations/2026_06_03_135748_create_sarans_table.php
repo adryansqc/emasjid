@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('nama');
             $table->string('email')->nullable();
             $table->string('no_hp')->nullable();
-            $table->enum('kategori', ['saran', 'masukan', 'kritik', 'pertanyaan']);
+            $table->enum('kategori', ['saran', 'masukan', 'pertanyaan']);
             $table->text('pesan');
-            $table->enum('status', ['belum_dibaca', 'sudah_dibaca'])->default('belum_dibaca');
+            $table->enum('status_baca', ['belum_dibaca', 'sudah_dibaca'])->default('belum_dibaca');
+            $table->enum('status_persetujuan', ['menunggu', 'disetujui', 'tidak_disetujui'])->default('menunggu');
             $table->timestamps();
         });
     }

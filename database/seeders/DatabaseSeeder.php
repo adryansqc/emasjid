@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             QurbanSeeder::class,
             ZakatSeeder::class,
             KasSeeder::class,
+            SaranSeeder::class,
         ]);
     }
 }
