@@ -34,6 +34,7 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="{{ route('frontend.index') }}">
+            <img src="{{ asset('image/unama.png') }}" alt="" style="width: 30px; height: 30px;">
             <i class="bi-building"></i>
             <span>{{ $masjid->nama ?? 'E Masjid' }}</span>
         </a>
