@@ -39,6 +39,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Green,
             ])
+            ->sidebarFullyCollapsibleOnDesktop()
             ->brandLogo(fn() => view('filament.brand'))
             ->favicon(asset('topik/images/favicon-masjid.png'))
             ->brandName('<a href="/">' . $masjidName . '</a>')
