@@ -14,19 +14,22 @@
 
                 <ul class="site-footer-links">
                     <li class="site-footer-link-item">
-                        <a href="#" class="site-footer-link">Home</a>
+                        <a href="{{ route('frontend.index') }}" class="site-footer-link">Beranda</a>
                     </li>
 
                     <li class="site-footer-link-item">
-                        <a href="#" class="site-footer-link">How it works</a>
+                        <a href="{{ route('frontend.kajian') }}" class="site-footer-link">Agenda Kegiatan</a>
                     </li>
 
                     <li class="site-footer-link-item">
-                        <a href="#" class="site-footer-link">FAQs</a>
+                        <a href="{{ route('frontend.pengumuman') }}" class="site-footer-link">Berita Acara</a>
                     </li>
 
                     <li class="site-footer-link-item">
-                        <a href="#" class="site-footer-link">Contact</a>
+                        <a href="{{ route('frontend.alquran') }}" class="site-footer-link">Al-Quran</a>
+                    </li>
+                    <li class="site-footer-link-item">
+                        <a href="{{ route('frontend.saran') }}" class="site-footer-link">Saran & Masukan</a>
                     </li>
                 </ul>
             </div>
