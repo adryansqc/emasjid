@@ -33,7 +33,8 @@
 
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a href="https://unama.ac.id/" target="_blank"><img src="{{ asset('image/unama.png') }}" alt="" style="width: 40px; height: 40px; margin-right: 90px"></a>
+        {{-- <a href="https://unama.ac.id/" target="_blank"><img src="{{ asset('image/unama.png') }}" alt="" style="width: 40px; height: 40px; margin-right: 90px"></a> --}}
+        <img src="{{ asset('image/unama.png') }}" alt="" style="width: 40px; height: 40px; margin-right: 90px">
         <a class="navbar-brand" href="{{ route('frontend.index') }}">
             <i class="bi-building"></i>
             <span>{{ $masjid->nama ?? 'E Masjid' }}</span>
