@@ -38,6 +38,9 @@ class JumatanResource extends Resource
                 DatePicker::make('tanggal')
                     ->label('Tanggal')
                     ->required(),
+                TextInput::make('imam')
+                    ->required()
+                    ->maxLength(255),
                 TextInput::make('khatib')
                     ->required()
                     ->maxLength(255),
@@ -54,6 +57,9 @@ class JumatanResource extends Resource
                 Tables\Columns\TextColumn::make('tanggal')
                     ->label('Tanggal')
                     ->date(),
+                Tables\Columns\TextColumn::make('imam')
+                    ->label('Imam')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('khatib')
                     ->label('Khatib')
                     ->searchable(),
@@ -67,6 +73,7 @@ class JumatanResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

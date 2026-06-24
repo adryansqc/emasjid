@@ -16,6 +16,7 @@ class JumatanSeeder extends Seeder
         Jumatan::create([
             'user_id' => 1,
             'tanggal' => '2024-06-07',
+            'imam' => 'Ustadz Fulan',
             'khatib' => 'Ustadz Fulan',
             'muadzin' => 'Bapak Alan',
         ]);

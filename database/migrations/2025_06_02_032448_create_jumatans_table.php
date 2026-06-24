@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->date('tanggal');
+            $table->string('imam');
             $table->string('khatib');
             $table->string('muadzin');
             $table->timestamps();
